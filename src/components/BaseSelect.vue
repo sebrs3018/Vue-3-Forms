@@ -5,7 +5,7 @@
     class="field"
     v-bind="{
       ...$attrs,
-      onChange: ($event) => $emit('update:model', $event.target.value),
+      onChange: ($event) => { $emit('update:modelValue', $event.target.value) }
     }"
   >
     <option
