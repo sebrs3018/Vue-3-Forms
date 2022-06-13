@@ -1,10 +1,11 @@
 <template>
   <!-- As a remainder, the $attrs object allows the injections of HTML attributes to this component -->
   <!-- NOTE: the onchange event for an input of type radio is fired only when the elem is CHECKED and NOT unchecked! -->
-  <input type="radio" :checked="modelValue === value" :value="value" @change="$emit('update:modelValue', value)" v-bind="$attrs"/>
-  <label v-if="label">{{ label }}</label>
+  <input :id="uuid" type="radio" :checked="modelValue === value" :value="value" @change="$emit('update:modelValue', value)" v-bind="$attrs"/>
+  <label :for="uuid" v-if="label">{{ label }}</label>
 </template>
 <script>
+import UniqueID from '../features/UniqueId'
 export default {
   props: {
     label: {
@@ -25,6 +26,12 @@ export default {
   methods: {
     onChange (e) {
       console.log(e.target.value)
+    }
+  },
+  setup () {
+    const uuid = UniqueID().getId()
+    return {
+      uuid
     }
   }
 }

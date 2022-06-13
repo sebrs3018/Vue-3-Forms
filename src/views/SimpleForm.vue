@@ -14,6 +14,7 @@
             v-model="event.title"
             label="Title"
             type="text"
+            error="This input has an error!"
           />
           <BaseInput
             v-model="event.description"
@@ -52,7 +53,10 @@
             <BaseCheckbox v-model="event.extras.music" label="Live music"/>
           </div>
       </fieldset>
-
+      <!--
+        Important accessibility tip:
+        - It is important to never disable the submit button so
+      -->
       <button class='button-fill-gradient' type='submit'>Submit</button>
     </form>
   </div>
