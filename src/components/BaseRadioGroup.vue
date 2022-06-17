@@ -9,10 +9,10 @@
     }"
   >
     <BaseRadio
-      :label="option.label"
-      :value="option.value"
       :name="name"
+      :label="option.label"
       :modelValue="modelValue"
+      :value="option.value"
       @update:modelValue="$emit('update:modelValue, $event')"
     />
   </component>
@@ -21,22 +21,21 @@
 <script>
 export default {
   props: {
-    options: {
-      type: Array,
-      required: true
-    },
-    // The name will be used to group the checkboxes
-    name: {
-      type: String,
-      required: true
+    vertical: {
+      type: Boolean,
+      default: false
     },
     modelValue: {
       type: [String, Number],
       required: true
     },
-    vertical: {
-      type: Boolean,
-      default: false
+    options: {
+      type: Array,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
     }
   }
 }

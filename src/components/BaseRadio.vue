@@ -1,10 +1,17 @@
 <template>
   <!-- As a remainder, the $attrs object allows the injections of HTML attributes to this component -->
   <!-- NOTE: the onchange event for an input of type radio is fired only when the elem is CHECKED and NOT unchecked! -->
-  <input :id="uuid" type="radio" :checked="modelValue === value" :value="value" @change="$emit('update:modelValue', value)" v-bind="$attrs"/>
+  <input :id="uuid" type="radio" :checked="modelValue === value" :value="value"  v-bind="{ ...$attrs, onChange: updateValue }"/>
   <label :for="uuid" v-if="label">{{ label }}</label>
+  <BaseErrorMessage
+    v-if="error"
+    :id="`${uuid}-error`"
+  >
+    {{ error }}
+  </BaseErrorMessage>
 </template>
 <script>
+import SetupFormComponent from '../features/SetupFormComponent'
 import UniqueID from '../features/UniqueId'
 export default {
   props: {
@@ -21,17 +28,18 @@ export default {
     value: {
       type: [String, Number],
       required: true
+    },
+    error: {
+      type: String,
+      default: ''
     }
   },
-  methods: {
-    onChange (e) {
-      console.log(e.target.value)
-    }
-  },
-  setup () {
+  setup (props, context) {
     const uuid = UniqueID().getId()
+    const { updateValue } = SetupFormComponent(props, context)
     return {
-      uuid
+      uuid,
+      updateValue
     }
   }
 }

@@ -10,6 +10,7 @@
 </template>
 <script>
 import UniqueID from '../features/UniqueId'
+import SetupFormComponent from '../features/SetupFormComponent'
 export default {
   props: {
     label: {
@@ -20,12 +21,18 @@ export default {
     modelValue: {
       type: Boolean,
       default: false
+    },
+    error: {
+      type: String,
+      default: ''
     }
   },
-  setup () {
+  setup (props, context) {
     const uuid = UniqueID().getId()
+    const { updateValue } = SetupFormComponent(props, context)
     return {
-      uuid
+      uuid,
+      updateValue
     }
   }
 }

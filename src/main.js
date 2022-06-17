@@ -17,8 +17,6 @@ const app = createApp(App)
 requireComponent.keys().forEach(fileName => {
   //  Notice that we are now dealing with webpack. Particularly, passing a filename to the function will return the module if found by the above directives (line 6)
   const componentConfig = requireComponent(fileName)
-  console.log(fileName.replace(/^\.\/(.*)\.\w+$/, '$1'))
-
   const componentName = upperFirst(
     // the regular expression will remove any word which contains '.', or '/' or '-', or anything which comes after a dot
     // e.g: ./base-input ==> baseinput
