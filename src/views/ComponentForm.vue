@@ -46,38 +46,53 @@
 
 <script>
 import { useField, useForm } from 'vee-validate'
+import { string, object, number, boolean } from 'yup'
 
 export default {
   setup () {
-    const required = value => {
-      const requiredMessage = 'This field is required'
-      if (value === undefined || value == null) return requiredMessage
-      if (!String(value).length) return requiredMessage
+    // const required = value => {
+    //   const requiredMessage = 'This field is required'
+    //   if (value === undefined || value == null) return requiredMessage
+    //   if (!String(value).length) return requiredMessage
 
-      return true
-    }
-    const minLength = (number, value) => {
-      if (String(value).length < number) return `Please type at least ${number} characters`
-      return true
-    }
-    const anything = () => true
-    const validationSchema = {
-      category: required,
-      title: value => {
-        const req = required(value)
-        if (req !== true) return req
+    //   return true
+    // }
+    // const minLength = (number, value) => {
+    //   if (String(value).length < number) return `Please type at least ${number} characters`
+    //   return true
+    // }
+    // const anything = () => true
 
-        const min = minLength(3, value)
-        if (min !== true) return min
+    /* Without yup */
+    // const validationSchema = {
+    //   category: required,
+    //   title: value => {
+    //     const req = required(value)
+    //     if (req !== true) return req
 
-        return true
-      },
-      description: required,
-      location: undefined,
-      pets: anything,
-      catering: anything,
-      music: anything
-    }
+    //     const min = minLength(3, value)
+    //     if (min !== true) return min
+
+    //     return true
+    //   },
+    //   description: required,
+    //   location: undefined,
+    //   pets: anything,
+    //   catering: anything,
+    //   music: anything
+    // }
+
+    /* With yup */
+    const validationSchema = object({
+      /* Inside the yup object we insert as many functions we want to be perfromed for validation purposes */
+      category: string().required(),
+      title: string().required('A cool title is required').min(3),
+      description: string().required(),
+      location: string(),
+      pets: number(),
+      catering: boolean(),
+      music: boolean()
+    })
 
     // Per each property in the validation schema there will be also associated an errors object which contain a property names as one of the schema containing the error message
     const { handleSubmit, errors } = useForm({

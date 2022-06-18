@@ -1,8 +1,29 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <BaseInput label="Email" type="email" v-model="email" :error="emailError" />
 
-    <BaseInput label="Password" type="password" v-model="password" :error="passwordError"/>
+  <!-- v-model will create a 2-way binding between the component and its state.
+       We could also think the v-model as a syntax sugar which pass to the component the following props:
+        modelValue => the current state of the componente
+        @event => which will be listen to an event to happen so the UI can be updated
+       Typically, the update is performed whenever the input event is fired making in this way a
+       eager validation.
+       If we want to make a lazy one, than we don't have to listen for the input event but to the change event
+       and, since we don't have anymore the possibility to use the v-model binding, we have to make it "manually"
+  -->
+    <BaseInput
+      label="Email"
+      type="email"
+      modelValue="email"
+      :error="emailError"
+       @change="handleChange"
+    />
+
+    <BaseInput
+      label="Password"
+      type="password"
+      v-model="password"
+      :error="passwordError"
+    />
 
     <BaseButton type="submit" class="-fill-gradient">
       Submit
@@ -44,8 +65,9 @@ export default {
       validationSchema: validations
     })
 
-    // It is important to notice that the useField name must match with the name of the property of the validation schema
-    const { value: email, errorMessage: emailError } = useField('email')
+    // It is important to notice that the useField name must match with the name of the property of the validation schema.
+    // Notice also that useField function provides also a handleChange function which can be used to perform lazy validation
+    const { value: email, errorMessage: emailError, handleChange } = useField('email')
     const { value: password, errorMessage: passwordError } = useField('password')
 
     return {
@@ -53,7 +75,8 @@ export default {
       email,
       emailError,
       password,
-      passwordError
+      passwordError,
+      handleChange
     }
   }
 }

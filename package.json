@@ -11,7 +11,8 @@
     "axios": "^0.27.2",
     "core-js": "^3.6.4",
     "vee-validate": "^4.5.11",
-    "vue": "^3.0.0-rc.1"
+    "vue": "^3.0.0-rc.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
